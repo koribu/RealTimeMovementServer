@@ -56,12 +56,10 @@ public class GameLogic : MonoBehaviour
         //Send information of all the existing Player's Id and Position
         foreach (KeyValuePair<int, Player> player in _players)
         {
-            msg = ServerToClientSignifiers.CreateExistOtherCharacter + "," + player.Value.posInPercent.x + "," + player.Value.posInPercent.x + ID;
+            msg = ServerToClientSignifiers.CreateExistOtherCharacter + "," + player.Value.posInPercent.x + "," + player.Value.posInPercent.x + "," + player.Key;
 
             NetworkedServerProcessing.SendMessageToClient(msg, ID);
         }
-
-       
 
         _players.Add(ID, newPlayer);
     }
