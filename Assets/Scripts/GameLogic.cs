@@ -68,6 +68,10 @@ public class GameLogic : MonoBehaviour
     {
         _players.Remove(ID);
 
+        string msg = ServerToClientSignifiers.DeletePlayerCharacter + "," + ID;
+
+        UpdatePlayers(msg);
+
     }
 
 }

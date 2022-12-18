@@ -90,6 +90,7 @@ static public class ServerToClientSignifiers
     public const int CreatePlayerCharacter = 2;
     public const int CreateNewOtherCharacter = 3;
     public const int CreateExistOtherCharacter = 4;
+    public const int DeletePlayerCharacter = 5;
 }
 
 #endregion
