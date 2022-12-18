@@ -13,9 +13,11 @@ static public class NetworkedServerProcessing
         string[] csv = msg.Split(',');
         int signifier = int.Parse(csv[0]);
 
-        if (signifier == ClientToServerSignifiers.asd)
+        if (signifier == ClientToServerSignifiers.SendPositionChangeSignifier)
         {
+            Vector2 positionChange = new Vector2(float.Parse(csv[1]), float.Parse(csv[2])) ;
 
+            gameLogic.UpdatePlayerMovement(positionChange, clientConnectionID);
         }
         // else if (signifier == ClientToServerSignifiers.asd)
         // {
@@ -34,6 +36,7 @@ static public class NetworkedServerProcessing
         networkedServer.SendMessageToClientWithSimulatedLatency(msg, clientConnectionID);
     }
 
+  
     
     #endregion
 
@@ -42,10 +45,15 @@ static public class NetworkedServerProcessing
     static public void ConnectionEvent(int clientConnectionID)
     {
         Debug.Log("New Connection, ID == " + clientConnectionID);
+
+
+        gameLogic.CreateNewPlayer(clientConnectionID);
+        
     }
     static public void DisconnectionEvent(int clientConnectionID)
     {
         Debug.Log("New Disconnection, ID == " + clientConnectionID);
+        gameLogic.DestroyPlayer(clientConnectionID);
     }
 
     #endregion
@@ -73,12 +81,15 @@ static public class NetworkedServerProcessing
 #region Protocol Signifiers
 static public class ClientToServerSignifiers
 {
-    public const int asd = 1;
+    public const int SendPositionChangeSignifier = 1;
 }
 
 static public class ServerToClientSignifiers
 {
-    public const int asd = 1;
+    public const int UpdatePlayersWithPositionChange = 1;
+    public const int CreatePlayerCharacter = 2;
+    public const int CreateNewOtherCharacter = 3;
+    public const int CreateExistOtherCharacter = 4;
 }
 
 #endregion
