@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 static public class NetworkedServerProcessing
@@ -13,9 +11,10 @@ static public class NetworkedServerProcessing
         string[] csv = msg.Split(',');
         int signifier = int.Parse(csv[0]);
 
-        if (signifier == ClientToServerSignifiers.SendPositionChangeSignifier)
+        if (signifier == ClientToServerSignifiers.SendVelocityChangeSignifier)
         {
             Vector2 positionChange = new Vector2(float.Parse(csv[1]), float.Parse(csv[2])) ;
+            Debug.LogError("****" + positionChange.x + " + " + positionChange.y);
 
             gameLogic.UpdatePlayerMovement(positionChange, clientConnectionID);
         }
@@ -81,7 +80,7 @@ static public class NetworkedServerProcessing
 #region Protocol Signifiers
 static public class ClientToServerSignifiers
 {
-    public const int SendPositionChangeSignifier = 1;
+    public const int SendVelocityChangeSignifier = 1;
 }
 
 static public class ServerToClientSignifiers
